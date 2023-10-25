@@ -1,4 +1,6 @@
 
+require('dotenv').config();
+
 const YAML = require('yamljs');
 const express = require('express');
 
