@@ -47,7 +47,7 @@ exports.postChatbot = async (req, res, next) => {
 	if(message == '더 보기') {
 		kakaoResponse.addOutput(new KR.SimpleText('원하는 메뉴를 선택하세요.'));
 
-		kakaoResponse.addQuickReply(new KR.MessageButton('새 게임(리셋)'));
+		kakaoResponse.addQuickReply(new KR.MessageButton('새 게임'));
 		kakaoResponse.addQuickReply(new KR.MessageButton('랭킹 보기'));
 		kakaoResponse.addQuickReply(new KR.MessageButton('이름 설정'));
 	}
