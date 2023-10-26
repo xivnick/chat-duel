@@ -37,6 +37,7 @@ exports.postChatbot = async (req, res, next) => {
 
 	const kakaoResponse = new KR.KakaoResponse();
 
+	// custom menu
 	if(message == '게임 시작') {
 		const output = await showHandOutput(uid)
 		kakaoResponse.addOutput(output)
@@ -52,6 +53,7 @@ exports.postChatbot = async (req, res, next) => {
 		kakaoResponse.addQuickReply(new KR.MessageButton('이름 설정'));
 	}
 
+	// extra menu
 	if(message == '새 게임') {
 		await gameService.resetGameOfUser(uid);
 
