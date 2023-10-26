@@ -59,7 +59,17 @@ const resetGameOfUser = async (uid) => {
 	return {}
 }
 
+const getHandOfUser = async (uid) => {
+
+	const { hand, error } = await userCardMapper.selectUserHand(uid);
+
+	if(error) return { hand: [], error }
+
+	return { hand }
+}
+
 module.exports = {
 	resetGameOfUser,
 	drawCards,
+	getHandOfUser,
 }

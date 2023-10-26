@@ -64,7 +64,13 @@ exports.insertUserCards = async (uid, cardData) => {
 
 exports.selectUserHand = async (uid) => {
 
-	const sql = 'SELECT name, text, url FROM user_card LEFT JOIN card ON user_card.card_id = card.id WHERE uid = ? AND location = ?';
+	const sql = `
+		SELECT c.id as cid, uc.id as ucid, name, text, url 
+			FROM user_card as uc LEFT JOIN card as c 
+				ON uc.card_id = c.id 
+			WHERE uid = ? AND location = ? 
+			ORDER BY date ASC
+	`;
 	const values = [uid, constants.LOCATION_HAND];
 
 	try {
@@ -77,7 +83,6 @@ exports.selectUserHand = async (uid) => {
 
 		return {hand: [], error}
 	}
-
 }
 
 exports.selectUserDeckCount = async (uid) => {
