@@ -1,19 +1,23 @@
 
 class KakaoResponse extends Object {
 
-	constructor(version='2.0') {
+	constructor(version='2.0', outputs = [], quickReplies = []) {
 		super();
 
 		Object.assign(this, {
 	        version,
 	        template: {
-	            outputs: [],
+	            outputs,
+	            quickReplies,
 	        }
 	    })
 	}
 
 	addOutput(output) {
 		this.template.outputs.push(output)
+	}
+	addQuickReplies(quickReplies) {
+		this.template.quickRepliess.push(output)
 	}
 
 	addSimpleText(text) {
@@ -77,6 +81,8 @@ class MessageButton extends Object	{
 
 	constructor(label, messageText) {
 		super();
+
+		if(!messageText) messageText = label;
 
 		Object.assign(this, {
 			action: 'message', 

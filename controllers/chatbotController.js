@@ -41,14 +41,28 @@ exports.postChatbot = async (req, res, next) => {
 		const output = await showHandOutput(uid)
 		kakaoResponse.addOutput(output)
 	}
-	if(message == '랭킹 확인') { 
-		kakaoResponse.addOutput(new KR.SimpleText('랭킹이 없습니다.'));
-	 }
+	if(message == '게임 설명') {
+		kakaoResponse.addOutput(new KR.SimpleText('게임 설명 서비스는 준비중입니다.'));
+	}
+	if(message == '더 보기') {
+		kakaoResponse.addOutput(new KR.SimpleText('원하는 버튼을 선택하세요.'));
+
+		kakaoResponse.addQuickReplies(new KR.MessageButton('새 게임(리셋)'));
+		kakaoResponse.addQuickReplies(new KR.MessageButton('랭킹 보기'));
+		kakaoResponse.addQuickReplies(new KR.MessageButton('이름 설정'));
+	}
+
 	if(message == '새 게임') {
 		await gameService.resetGameOfUser(uid);
 
-		const output = await showHandOutput(uid)
-		kakaoResponse.addOutput(output)
+		const output = await showHandOutput(uid);
+		kakaoResponse.addOutput(output);
+	}
+	if(message == '랭킹 보기') { 
+		kakaoResponse.addOutput(new KR.SimpleText('랭킹 서비스는 준비중입니다.'));
+	}
+	if(message == '이름 설정') { 
+		kakaoResponse.addOutput(new KR.SimpleText('이름 설정 서비스는 준비중입니다.'));
 	}
 
 	return res.json(kakaoResponse);
