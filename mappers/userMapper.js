@@ -1,7 +1,7 @@
 
 const db = require('../db');
 
-exports.updateUser = async (uid, level, difficulty) => {
+exports.updateUser = async (uid, level, difficulty, supportOnly) => {
     let sql = 'UPDATE user SET ';
     let values = [];
 
@@ -13,6 +13,11 @@ exports.updateUser = async (uid, level, difficulty) => {
     if (difficulty !== undefined) {
         sql += 'difficulty = ?, ';
         values.push(difficulty);
+    }
+
+    if (supportOnly !== undefined) {
+        sql += 'support_only = ?, ';
+        values.push(supportOnly);
     }
     
     sql = sql.slice(0, -2);
@@ -66,7 +71,7 @@ exports.insertUser = async (uid) => {
 
 exports.selectUserByUid = async (uid) => {
 
-    const sql = 'SELECT id, uid, level, difficulty FROM user WHERE uid = ?';
+    const sql = 'SELECT id, uid, level, difficulty, support_only as supportOnly FROM user WHERE uid = ?';
     const values = [uid];
 
     try {

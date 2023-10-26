@@ -16,7 +16,7 @@ const showHandOutput = async (uid) => {
 
 		const bc = new KR.BasicCard(card.name, card.text, constants.BASE_URL + card.url);
 
-		bc.addButton(new KR.MessageButton('카드 사용하기', '사용 ' + card.name));
+		if(!(await gameService.isUserSupportOnly(uid))) bc.addButton(new KR.MessageButton('카드 사용하기', '사용 ' + card.name));
 		bc.addButton(new KR.MessageButton('서포트 내리기', '서포트 ' + card.name));
 
 		carousel.addItem(bc);
@@ -39,8 +39,7 @@ exports.postChatbot = async (req, res, next) => {
 
 	// custom menu
 	if(message == '게임 시작') {
-		const output = await showHandOutput(uid)
-		kakaoResponse.addOutput(output)
+		kakaoResponse.addOutput(await showHandOutput(uid));
 	}
 	if(message == '게임 설명') {
 		kakaoResponse.addOutput(new KR.SimpleText('게임 설명 서비스는 준비중입니다.'));
@@ -56,15 +55,27 @@ exports.postChatbot = async (req, res, next) => {
 	// extra menu
 	if(message == '새 게임') {
 		await gameService.resetGameOfUser(uid);
-
-		const output = await showHandOutput(uid);
-		kakaoResponse.addOutput(output);
+		kakaoResponse.addOutput(await showHandOutput(uid));
 	}
 	if(message == '랭킹 보기') { 
 		kakaoResponse.addOutput(new KR.SimpleText('랭킹 서비스는 준비중입니다.'));
 	}
 	if(message == '이름 설정') { 
 		kakaoResponse.addOutput(new KR.SimpleText('이름 설정 서비스는 준비중입니다.'));
+	}
+
+	// action
+	if(message.startsWith('사용 ')) {
+		if(await gameService.IsUserSupportOnly(uid)) {
+			kakaoResponse.addOutput(new KR.SimpleText('서포트 카드를 내려주세요.'));
+			kakaoResponse.addOutput(await showHandOutput(uid));
+		}
+		else {
+			kakaoResponse.addOutput(new KR.SimpleText('사용 서비스는 준비중입니다.'));
+		}
+	}
+	if(message.startsWith('서포트 ')) {
+		kakaoResponse.addOutput(new KR.SimpleText('서포트 내리기 서비스는 준비중입니다.'));
 	}
 
 	return res.json(kakaoResponse);

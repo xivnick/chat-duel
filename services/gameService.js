@@ -38,7 +38,7 @@ const drawCards = async (uid, count=2) => {
 
 const resetGameOfUser = async (uid) => {
 
-	const {error} = await userMapper.updateUser(uid, 1, 1);
+	const {error} = await userMapper.updateUser(uid, 1, 1, 1);
 
 	if(error) return { error }
 
@@ -68,8 +68,16 @@ const getHandOfUser = async (uid) => {
 	return { hand }
 }
 
+const isUserSupportOnly = async (uid) => {
+
+	const { user } = await userMapper.selectUserByUid(uid);
+
+	return user.supportOnly;
+}
+
 module.exports = {
 	resetGameOfUser,
 	drawCards,
 	getHandOfUser,
+	isUserSupportOnly,
 }
