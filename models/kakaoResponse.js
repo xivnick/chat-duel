@@ -16,8 +16,8 @@ class KakaoResponse extends Object {
 	addOutput(output) {
 		this.template.outputs.push(output)
 	}
-	addQuickReplies(quickReplies) {
-		this.template.quickRepliess.push(output)
+	addQuickReply(quickReply) {
+		this.template.quickReplies.push(quickReply)
 	}
 
 	addSimpleText(text) {
