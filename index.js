@@ -15,6 +15,8 @@ const chatbotController = require('./controllers/chatbotController');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static('static'));
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.post('/chatbot', chatbotController.postChatbot)
