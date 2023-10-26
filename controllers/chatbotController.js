@@ -47,8 +47,6 @@ exports.postChatbot = async (req, res, next) => {
 
 		const output = await showHandOutput(uid)
 		kakaoResponse.addOutput(output)
-
-		console.log(kakaoResponse);
 	}
 
 	return res.json(kakaoResponse);
