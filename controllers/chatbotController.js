@@ -1,4 +1,6 @@
 
+const constants = require('../constants');
+
 const gameService = require('../services/gameService');
 const userService = require('../services/userService');
 
@@ -12,7 +14,7 @@ const showHandOutput = async (uid) => {
 
 	for(const card of hand) {
 
-		const bc = new KR.BasicCard(card.name, card.text, card.url);
+		const bc = new KR.BasicCard(card.name, card.text, constants.BASE_URL + card.url);
 
 		bc.addButton(new KR.MessageButton('카드 사용하기', '사용 ' + card.name));
 		bc.addButton(new KR.MessageButton('서포트 내리기', '서포트 ' + card.name));
